@@ -190,10 +190,10 @@ export default function ChatPage() {
         if (!socket.connected) return;
         
         setIsAiLoading(true);
-        // If input is empty, maybe send context? For now send prompt.
-        // Prompt could be: "Write a message for me about..." or "Hello" -> "Hello! How are you?"
-        // Ideally backend handles context. Here we just send current input as prompt.
-        socket.emit('ai_assist', { prompt: inputText || "Help me write a friendly greeting" });
+        const prompt = inputText || "Help me write a friendly greeting";
+        // Clear input so AI text replaces it (as requested)
+        setInputText(""); 
+        socket.emit('ai_assist', { prompt });
     };
 
     // If not authenticated yet, show Login Form

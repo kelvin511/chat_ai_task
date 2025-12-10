@@ -11,7 +11,15 @@ interface MessageListProps {
   messages: Message[];
 }
 
+import { useEffect, useRef } from "react";
+
 export function MessageList({ messages }: MessageListProps) {
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4 custom-scrollbar z-0">
       {messages.map((msg) => (
@@ -37,6 +45,7 @@ export function MessageList({ messages }: MessageListProps) {
           </div>
         </div>
       ))}
+      <div ref={bottomRef} />
     </div>
   );
 }
